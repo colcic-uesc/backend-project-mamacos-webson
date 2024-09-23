@@ -19,16 +19,17 @@ public class SkillsCRUD : ISkillCRUD
 
     public void Create(Skill entity)
     {
-        entity.IdSkill = Skills.Count > 0 ? Skills.Max(x => x.IdSkill) + 1 : 1;
+        entity.IdSkill = Skills.Count > 0 ? Skills.Max(x => x.IdSkill) + 1 : 1; // autoincrement id
         Skills.Add(entity);
     }
     public void Delete(Skill entity)
     {
-        var refIdSkill = entity.IdSkill - 1;
+        var refIdSkill = entity.IdSkill - 1; // this is a valid index in skills (List)
         var searchSkill = Skills.FirstOrDefault(skillInList => skillInList.IdSkill == refIdSkill);
-
+        
+        // if the skill is found
         if (searchSkill != null){
-            Skills.RemoveAt(entity.IdSkill-1);
+            Skills.RemoveAt(refIdSkill); // remove skill with found id
         }
     }
     public IEnumerable<Skill> ReadAll()
@@ -37,12 +38,13 @@ public class SkillsCRUD : ISkillCRUD
     }
     public void Update(Skill entity)
     {
-        var refIdSkill = entity.IdSkill -1 ;
+        var refIdSkill = entity.IdSkill -1 ; // this is a valid index in skills (List)
         var searchSkill = Skills.FirstOrDefault(skillInList => skillInList.IdSkill == refIdSkill);
 
+        // if the skill is found
         if (searchSkill != null){
-            Skills[refIdSkill].Title = entity.Title;
-            Skills[refIdSkill].Description = entity.Description;
+            Skills[refIdSkill].Title = entity.Title; // change skill title with found id
+            Skills[refIdSkill].Description = entity.Description; // change skill description with found id
         }
     }
 }
