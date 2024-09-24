@@ -47,4 +47,11 @@ public class SkillsCRUD : ISkillCRUD
             Skills[refIdSkill].Description = entity.Description; // change skill description with found id
         }
     }
+
+    // public method for search a skill by id 
+    public Skill GetSkillById(int idSkill)
+    {
+        return Skills.FirstOrDefault(x => x.IdSkill == idSkill); // this method will be used in studentsCRUD for create students with skill valids
+    }
 }
+

@@ -17,6 +17,6 @@ public class Student
    
    public string Bio { get; set; }
    
-   //public List<Skill> skills { get; set; }
+   public List<Skill> skills { get; set; }
    
 }
