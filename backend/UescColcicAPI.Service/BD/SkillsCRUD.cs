@@ -1,9 +1,5 @@
 using UescColcicAPI.Services.BD.Interfaces;
 using UescColcicAPI.Core;
-using System.Collections;
-using System.Security.Cryptography.X509Certificates;
-using System.Reflection;
-using System.Data;
 
 namespace UescColcicAPI.Services.BD;
 
@@ -47,11 +43,4 @@ public class SkillsCRUD : ISkillCRUD
             Skills[refIdSkill].Description = entity.Description; // change skill description with found id
         }
     }
-
-    // public method for search a skill by id 
-    public Skill GetSkillById(int idSkill)
-    {
-        return Skills.FirstOrDefault(x => x.IdSkill == idSkill); // this method will be used in studentsCRUD for create students with skill valids
-    }
 }
-

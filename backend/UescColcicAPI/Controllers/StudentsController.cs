@@ -17,23 +17,23 @@ namespace UescColcicAPI.Controllers;
         }
 
        
-        [HttpGet(Name = "GetStudentsNames")]
+        [HttpGet(Name = "GetStudents")]
         public IEnumerable<Student> Get()
         {
             return _studentsCRUD.ReadAll();
         }
 
-        [HttpPost(Name = "PostStudensName")]
+        [HttpPost(Name = "PostStudent")]
         public void Post(Student entity){
             _studentsCRUD.Create(entity);
         }
 
-        [HttpDelete(Name = "DeleteStudensName")]
+        [HttpDelete(Name = "DeleteStudent")]
         public void Delete(Student entity){
             _studentsCRUD.Delete(entity);
         }
         
-        [HttpPut(Name = "UpdateStudensName")]
+        [HttpPut(Name = "UpdateStudent")]
         public void Put(Student entity){
             _studentsCRUD.Update(entity);
         }

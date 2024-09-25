@@ -1,7 +1,7 @@
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using UescColcicAPI.Services.BD.Interfaces;
 using UescColcicAPI.Core;
+using Microsoft.AspNetCore.Http;
 
 namespace UescColcicAPI.Controllers;
 
@@ -17,23 +17,23 @@ namespace UescColcicAPI.Controllers;
         }
 
        
-        [HttpGet(Name = "")]
+        [HttpGet(Name = "GetSkills")]
         public IEnumerable<Skill> Get()
         {
             return _skillsCRUD.ReadAll();
         }
 
-        [HttpPost(Name = "")]
+        [HttpPost(Name = "CreateSkill")]
         public void Post(Skill entity){
             _skillsCRUD.Create(entity);
         }
 
-        [HttpDelete(Name = "")]
+        [HttpDelete(Name = "DeleteSkill")]
         public void Delete(Skill entity){
             _skillsCRUD.Delete(entity);
         }
         
-        [HttpPut(Name = "")]
+        [HttpPut(Name = "UpdateSkill")]
         public void Put(Skill entity){
             _skillsCRUD.Update(entity);
         }

@@ -1,9 +1,5 @@
 ﻿using UescColcicAPI.Services.BD.Interfaces;
 using UescColcicAPI.Core;
-using System.Collections;
-using System.Security.Cryptography.X509Certificates;
-using System.Reflection;
-using Microsoft.VisualBasic;
 
 namespace UescColcicAPI.Services.BD;
 public class StudentsCRUD : IStudentsCRUD
