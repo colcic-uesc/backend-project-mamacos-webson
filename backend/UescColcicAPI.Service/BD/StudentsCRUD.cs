@@ -127,7 +127,7 @@ public class StudentsCRUD : IStudentsCRUD
                     }
                 }
             }
-            // Atualiza os outros campos do estudante
+            // Updtading other attributes of student entity
             studentToUpdate.Registration = entity.Registration;
             studentToUpdate.Name = entity.Name;
             studentToUpdate.Email = entity.Email;
