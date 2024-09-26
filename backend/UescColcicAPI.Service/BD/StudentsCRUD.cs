@@ -82,7 +82,7 @@ public class StudentsCRUD : IStudentsCRUD
     public void Delete(Student entity)
     {
         // Get the ID of the student you want to delete
-        int refStudentId = entity.IdStudent-1;
+        int refStudentId = entity.IdStudent;
 
         // Search student in list with the id
         Student studentToRemove = Students.FirstOrDefault(studentInList => studentInList.IdStudent == refStudentId);
@@ -90,7 +90,7 @@ public class StudentsCRUD : IStudentsCRUD
         // If the student is found, remove him
         if (studentToRemove != null)
         {
-            Students.RemoveAt(refStudentId);
+            Students.Remove(studentToRemove);
         }
     }
 
@@ -101,10 +101,12 @@ public class StudentsCRUD : IStudentsCRUD
     
     public void Update(Student entity)
     {
-        int refStudentId = entity.IdStudent - 1;
+        int refStudentId = entity.IdStudent;
         Student studentToUpdate = Students.FirstOrDefault(studentInList => studentInList.IdStudent == refStudentId);
         List<Skill> skillsRef = entity.skills;
         var listSkillGlobal= _skillsCRUD.ReadAll();
+        var skillsToUpdate = new List<Skill>();
+
 
         // exists student?
         if (studentToUpdate != null)
@@ -114,15 +116,17 @@ public class StudentsCRUD : IStudentsCRUD
                 var searchSkill = listSkillGlobal.FirstOrDefault(x => x.IdSkill == skill.IdSkill); // search validSkill
                 if (searchSkill != null)
                 {
-                    // return only skills for the studentToUpdate
-                    var studentSkill = studentToUpdate.skills.FirstOrDefault(s => s.IdSkill == skill.IdSkill);
-                    if (studentSkill != null)
-                    {
-                        studentSkill.Title = searchSkill.Title; // change title of skill
-                        studentSkill.Description = searchSkill.Description; // change description
-                    }
+                    Console.WriteLine(searchSkill);
+                    skillsToUpdate.Add(searchSkill); // store in a temporary list to save skills valids
                 }
             }
+
+            studentToUpdate.skills.Clear(); // clear trash in list 
+            foreach (var skill in skillsToUpdate)
+            {
+                studentToUpdate.skills.Add(skill);// add valid skills
+            }
+
             // Updtading other attributes of student entity
             studentToUpdate.Registration = entity.Registration;
             studentToUpdate.Name = entity.Name;
