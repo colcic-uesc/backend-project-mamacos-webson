@@ -1,33 +1,93 @@
 ﻿using UescColcicAPI.Services.BD.Interfaces;
 using UescColcicAPI.Core;
-using System.Collections;
-using System.Security.Cryptography.X509Certificates;
-using System.Reflection;
 
 namespace UescColcicAPI.Services.BD;
-
 public class StudentsCRUD : IStudentsCRUD
 {
+    private readonly ISkillCRUD _skillsCRUD; // Inject dependecy
+
+    public StudentsCRUD(ISkillCRUD skillsCRUD) // 
+    {
+        _skillsCRUD = skillsCRUD; // to acess readAll()
+    }
+    
     private static readonly List<Student> Students = new()
-   {
-      new Student { Name = "Douglas", Email = "douglas.cic@uesc.br" },
-      new Student { Name = "Estevão", Email = "estevao.cic@uesc.br" },
-      new Student { Name = "Gabriel", Email = "gabriel.cic@uesc.br" },
-      new Student { Name = "Gabriela", Email = "gabriela.cic@uesc.br" }
-   };
+    {
+            new Student
+            {
+                IdStudent = 1,
+                Registration = "2023001",
+                Name = "Douglas",
+                Email = "douglas.cic@uesc.br",
+                Course = "Computer Science",
+                Bio = "Aspiring software developer with a passion for coding.",
+                skills = new List<Skill>() // for each student a new list of skills
+            },
+            new Student
+            {
+                IdStudent = 2,
+                Registration = "2023002",
+                Name = "Estevão",
+                Email = "estevao.cic@uesc.br",
+                Course = "Computer Science",
+                Bio = "Interested in AI and machine learning.",
+                skills = new List<Skill>() // for each student a new list of skills
+            },
+            new Student
+            {
+                IdStudent = 3,
+                Registration = "2023003",
+                Name = "Gabriel",
+                Email = "gabriel.cic@uesc.br",
+                Course = "Information Systems",
+                Bio = "Data enthusiast with experience in database management.",
+                skills = new List<Skill>() // for each student a new list of skills
+            },
+            new Student
+            {
+                IdStudent = 4,
+                Registration = "2023004",
+                Name = "Gabriela",
+                Email = "gabriela.cic@uesc.br",
+                Course = "Software Engineering",
+                Bio = "Focused on software development and cloud computing.",
+                skills = new List<Skill>() // for each student a new list of skills
+            }
+    };
     public void Create(Student entity)
     {
-        Students.Add(entity); //Adiciona o um objeto do tipo Student na lista
+        entity.IdStudent = Students.Count > 0 ? Students.Max(x => x.IdStudent) + 1 : 1; // autoincrement id
+        var listSkillGlobal= _skillsCRUD.ReadAll();
+        var listSkillRef = entity.skills;
+        var skillsToAdd = new List<Skill>();
+
+        foreach (var skill in listSkillRef)
+        {
+            var searchSkill = listSkillGlobal.FirstOrDefault((x)=>x.IdSkill == skill.IdSkill); // acess method GetSkillById
+
+            if (searchSkill != null)
+            {
+                skillsToAdd.Add(searchSkill); // store in a temporary list to save skills valids
+            }
+        }
+        entity.skills.Clear(); // clear trash in list 
+        foreach (var skill in skillsToAdd)
+        {
+            entity.skills.Add(skill);// add valid skills
+        }
+        Students.Add(entity);// create student
     }
+
+
     public void Delete(Student entity)
     {
-        // Captura o email que quer deletar (considerando email como id único)
-        string refStudentEmail = entity.Email;
+        // Get the ID of the student you want to delete
+        int refStudentId = entity.IdStudent;
 
-        // Encontra o estudante na lista com o email especificado
-        Student studentToRemove = Students.FirstOrDefault(studentInList => studentInList.Email == refStudentEmail);
+        // Search student in list with the id
+        Student studentToRemove = Students.FirstOrDefault(studentInList => studentInList.IdStudent == refStudentId);
 
-        // Se o estudante foi encontrado, remove da lista
+        // If the student is found, remove him
         if (studentToRemove != null)
         {
             Students.Remove(studentToRemove);
@@ -38,23 +98,41 @@ public class StudentsCRUD : IStudentsCRUD
     {
         return Students;
     }
-
+    
     public void Update(Student entity)
     {
-         /*Captura o email que quer deletar (considerando email como id único)
-        string refStudentEmail = entity.Email;
-        string refStudentName = entity.Name;
-        */
-        string refStudentEmail = entity.Email;
-        //preciso para achar a referencia ao objeto que possui um email igual ao Student entity do parâmetro
-        Student studentToUpdate = Students.FirstOrDefault(studentInList => studentInList.Email == refStudentEmail);
+        int refStudentId = entity.IdStudent;
+        Student studentToUpdate = Students.FirstOrDefault(studentInList => studentInList.IdStudent == refStudentId);
+        List<Skill> skillsRef = entity.skills;
+        var listSkillGlobal= _skillsCRUD.ReadAll();
+        var skillsToUpdate = new List<Skill>();
 
-        if(studentToUpdate != null){
-            studentToUpdate.Email += ".alterado"; //alterando direto, testei depois
-            /*
-            int indexUpdate = Students.IndexOf(studentToUpdate);
-            Students[indexUpdate].Email+=".alterado";
-            */
+
+        // exists student?
+        if (studentToUpdate != null)
+        {
+            foreach (var skill in skillsRef)
+            {
+                var searchSkill = listSkillGlobal.FirstOrDefault(x => x.IdSkill == skill.IdSkill); // search validSkill
+                if (searchSkill != null)
+                {
+                    Console.WriteLine(searchSkill);
+                    skillsToUpdate.Add(searchSkill); // store in a temporary list to save skills valids
+                }
+            }
+
+            studentToUpdate.skills.Clear(); // clear trash in list 
+            foreach (var skill in skillsToUpdate)
+            {
+                studentToUpdate.skills.Add(skill);// add valid skills
+            }
+
+            // Updtading other attributes of student entity
+            studentToUpdate.Registration = entity.Registration;
+            studentToUpdate.Name = entity.Name;
+            studentToUpdate.Email = entity.Email;
+            studentToUpdate.Course = entity.Course;
+            studentToUpdate.Bio = entity.Bio;
         }
     }
 }

@@ -1,9 +1,5 @@
 using UescColcicAPI.Services.BD.Interfaces;
 using UescColcicAPI.Core;
-using System.Collections;
-using System.Security.Cryptography.X509Certificates;
-using System.Reflection;
-using System.Data;
 
 namespace UescColcicAPI.Services.BD;
 
@@ -19,16 +15,17 @@ public class SkillsCRUD : ISkillCRUD
 
     public void Create(Skill entity)
     {
-        entity.IdSkill = Skills.Count > 0 ? Skills.Max(x => x.IdSkill) + 1 : 1;
+        entity.IdSkill = Skills.Count > 0 ? Skills.Max(x => x.IdSkill) + 1 : 1; // autoincrement id
         Skills.Add(entity);
     }
     public void Delete(Skill entity)
     {
-        var refIdSkill = entity.IdSkill - 1;
+        var refIdSkill = entity.IdSkill;
         var searchSkill = Skills.FirstOrDefault(skillInList => skillInList.IdSkill == refIdSkill);
-
+        
+        // if the skill is found
         if (searchSkill != null){
-            Skills.RemoveAt(entity.IdSkill-1);
+            Skills.Remove(searchSkill); // remove skill
         }
     }
     public IEnumerable<Skill> ReadAll()
@@ -37,12 +34,13 @@ public class SkillsCRUD : ISkillCRUD
     }
     public void Update(Skill entity)
     {
-        var refIdSkill = entity.IdSkill -1 ;
+        var refIdSkill = entity.IdSkill; //
         var searchSkill = Skills.FirstOrDefault(skillInList => skillInList.IdSkill == refIdSkill);
 
+        // if the skill is found
         if (searchSkill != null){
-            Skills[refIdSkill].Title = entity.Title;
-            Skills[refIdSkill].Description = entity.Description;
+            searchSkill.Title = entity.Title; // change skill title
+            searchSkill.Description = entity.Description; // change skill description
         }
     }
 }
