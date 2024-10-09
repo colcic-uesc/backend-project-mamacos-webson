@@ -1,46 +1,57 @@
-using UescColcicAPI.Services.BD.Interfaces;
+﻿using UescColcicAPI.Services.BD.Interfaces;
 using UescColcicAPI.Core;
+using Microsoft.EntityFrameworkCore;
+using SQLitePCL;
 
 namespace UescColcicAPI.Services.BD;
 
-public class SkillsCRUD : ISkillCRUD
+public class SkillCRUD : ISkillCRUD
 {
-    private static readonly List<Skill> Skills = new()
-    {
-        new Skill { IdSkill = 1, Title = "Programming", Description = "Proficiency in C# and .NET development" },
-        new Skill { IdSkill = 2, Title = "Database Management", Description = "Experience with SQL Server and PostgreSQL" },
-        new Skill { IdSkill = 3, Title = "Web Development", Description = "Skilled in HTML, CSS, JavaScript, and React" },
-        new Skill { IdSkill = 4, Title = "Mobile Development", Description = "Expertise in React Native and mobile app design" }
-    };
-
+    private UescColcicDBContext _context;
+   public SkillCRUD(UescColcicDBContext context){
+        _context = context;
+   }
     public void Create(Skill entity)
     {
-        entity.IdSkill = Skills.Count > 0 ? Skills.Max(x => x.IdSkill) + 1 : 1; // autoincrement id
-        Skills.Add(entity);
+        _context.Skill.Add(entity);
+        _context.SaveChanges();
     }
+
     public void Delete(Skill entity)
-    {
-        var refIdSkill = entity.IdSkill;
-        var searchSkill = Skills.FirstOrDefault(skillInList => skillInList.IdSkill == refIdSkill);
-        
-        // if the skill is found
-        if (searchSkill != null){
-            Skills.Remove(searchSkill); // remove skill
+    {   
+        var skill = this.Find(entity.IdSkill);
+        if(skill is  not null){
+            _context.Skill.Remove(skill);
+
+            _context.SaveChanges();
         }
     }
+
     public IEnumerable<Skill> ReadAll()
     {
-        return Skills;
+        return _context.Skill.Include(s => s.IdSkill);
     }
+
+    public Skill? ReadById(int id)
+    {
+        var skill = this.Find(id);
+        return skill;
+    }
+
     public void Update(Skill entity)
     {
-        var refIdSkill = entity.IdSkill; //
-        var searchSkill = Skills.FirstOrDefault(skillInList => skillInList.IdSkill == refIdSkill);
-
-        // if the skill is found
-        if (searchSkill != null){
-            searchSkill.Title = entity.Title; // change skill title
-            searchSkill.Description = entity.Description; // change skill description
+        var skill = this.Find(entity.IdSkill);
+        if(skill is not null)
+        {
+            skill.Title = entity.Title;
+            skill.Description = entity.Description;
+            _context.SaveChanges();
         }
     }
+
+    private Skill? Find(int id)
+    {
+        return _context.Skill.Include(s => s.IdSkill).FirstOrDefault(x => x.IdSkill == id);
+    }
+
 }
