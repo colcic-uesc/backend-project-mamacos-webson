@@ -7,6 +7,7 @@ namespace UescColcicAPI.Services.BD;
 public class UescColcicDBContext : DbContext
 {
    public DbSet<Project> Project { get; set; }
+   public DbSet<Skill> Skill { get; set; }
 
    protected override void OnModelCreating(ModelBuilder modelBuilder)
    {
@@ -16,7 +17,12 @@ public class UescColcicDBContext : DbContext
         
         modelBuilder.Entity<Project>().ToTable("Project");
         modelBuilder.Entity<Project>().HasKey(p => p.IdProject);
-        
+
+        modelBuilder.Entity<Project>().HasMany<Skill>(p => p.Skills).WithOne(p => p.Project).HasForeignKey(p => p.IdSkill);
+
+        modelBuilder.Entity<Skill>().ToTable("Skill");
+        modelBuilder.Entity<Skill>().HasKey(p => p.IdSkill);
+
    }
 
    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

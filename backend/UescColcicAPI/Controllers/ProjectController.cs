@@ -14,9 +14,9 @@ namespace UescColcicAPI.Controllers;
         public ProjectController(IProjectCRUD projectCRUD)
         {
             _projectCRUD = projectCRUD;
+
         }
 
-       
         [HttpGet(Name = "GetProject")]
         public IEnumerable<Project> Get()
         {

@@ -12,8 +12,17 @@ public class ProjectCRUD : IProjectCRUD
         _context = context;
    }
     public void Create(Project entity)
-    {
+    {   
         _context.Project.Add(entity);
+        if (entity.Skills != null)
+        {
+            foreach (var skill in entity.Skills)
+            {
+                // 3. Separar e criar as skills associadas ao projeto
+                skill.IdProject = entity.IdProject; // Relacionar skill ao projeto recém-criado
+                _context.Add(skill);
+            }
+        }
         _context.SaveChanges();
     }
 
