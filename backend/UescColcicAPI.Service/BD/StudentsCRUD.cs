@@ -19,7 +19,7 @@ public class StudentsCRUD : IStudentsCRUD
 
     public void Delete(Student entity)
     {   
-        var student = this.Find(entity.IdStudent);
+        var student = this.ReadById(entity.IdStudent);
         if(student is  not null){
             _context.Students.Remove(student);
 
@@ -29,18 +29,18 @@ public class StudentsCRUD : IStudentsCRUD
 
     public IEnumerable<Student> ReadAll()
     {
-        return _context.Students.Include(s => s.Skills);
+        return _context.Students;
     }
 
     public Student? ReadById(int id)
     {
-        var student = this.Find(id);
+        var student = this.ReadById(id);
         return student;
     }
 
     public void Update(Student entity)
     {
-        var student = this.Find(entity.IdStudent);
+        var student = this.ReadById(entity.IdStudent);
         if(student is not null)
         {
             student.Registration = entity.Registration;
@@ -48,7 +48,6 @@ public class StudentsCRUD : IStudentsCRUD
             student.Email = entity.Email;
             student.Course = entity.Course;
             student.Bio = entity.Bio;
-            student.Skill = entity.Skill;
             
             _context.SaveChanges();
         }
@@ -56,7 +55,7 @@ public class StudentsCRUD : IStudentsCRUD
 
     private Student? Find(int id)
     {
-        return _context.Students.Include(s => s.Skills).FirstOrDefault(x => x.IdStudent == id);
+        return _context.Students.FirstOrDefault(x => x.IdStudent == id);
     }
 
 }

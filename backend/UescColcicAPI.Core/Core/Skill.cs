@@ -11,6 +11,8 @@ public class Skill
 
    public string? Description { get; set; }
 
-   public virtual Project? Project { get; set; }
+   public int StudentId { get; set; }
+
+   public int ProjectId {  get; set;   }
 
 }

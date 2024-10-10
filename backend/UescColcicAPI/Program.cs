@@ -1,6 +1,5 @@
 using UescColcicAPI.Services.BD;
 using UescColcicAPI.Services.BD.Interfaces;
-using UescColcicDBContext.UescColcicAPI.Services.BD;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,11 +7,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
+builder.Services.AddScoped<UescColcicDBContext>();
 builder.Services.AddScoped<IStudentsCRUD, StudentsCRUD>();
+builder.Services.AddScoped<ISkillCRUD, SkillCRUD>();
 
-builder.Services.AddScoped<ISkillCRUD, SkillsCRUD>();
-
-builder.Services.AddDBContext<UescColcicDBContext>();
 
 
 
