@@ -11,8 +11,5 @@ public class Skill
    public string? Title { get; set; }
     [JsonIgnore]
    public string? Description { get; set; }
-    [JsonIgnore]
    public int IdProject {  get; set;   }
-    [JsonIgnore]
-    public virtual Project? Project { get; set; }
 }

@@ -39,6 +39,7 @@ namespace UescColcicAPI.Services.Migrations
             modelBuilder.Entity("UescColcicAPI.Core.Skill", b =>
                 {
                     b.Property<int>("IdSkill")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
@@ -52,18 +53,18 @@ namespace UescColcicAPI.Services.Migrations
 
                     b.HasKey("IdSkill");
 
+                    b.HasIndex("IdProject");
+
                     b.ToTable("Skill", (string)null);
                 });
 
             modelBuilder.Entity("UescColcicAPI.Core.Skill", b =>
                 {
-                    b.HasOne("UescColcicAPI.Core.Project", "Project")
+                    b.HasOne("UescColcicAPI.Core.Project", null)
                         .WithMany("Skills")
-                        .HasForeignKey("IdSkill")
+                        .HasForeignKey("IdProject")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Project");
                 });
 
             modelBuilder.Entity("UescColcicAPI.Core.Project", b =>

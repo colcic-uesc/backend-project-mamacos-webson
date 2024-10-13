@@ -14,16 +14,8 @@ public class ProjectCRUD : IProjectCRUD
     public void Create(Project entity)
     {   
         _context.Project.Add(entity);
-        if (entity.Skills != null)
-        {
-            foreach (var skill in entity.Skills)
-            {
-                // 3. Separar e criar as skills associadas ao projeto
-                skill.IdProject = entity.IdProject; // Relacionar skill ao projeto recém-criado
-                _context.Add(skill);
-            }
-        }
         _context.SaveChanges();
+
     }
 
     public void Delete(Project entity)
@@ -36,9 +28,9 @@ public class ProjectCRUD : IProjectCRUD
         }
     }
 
-    public IEnumerable<Project> ReadAll()
+   public IEnumerable<Project> ReadAll()
     {
-        return _context.Project;
+        return _context.Project.Include(p => p.Skills).ToList();
     }
 
     public Project? ReadById(int id)

@@ -10,8 +10,8 @@ using UescColcicAPI.Services.BD;
 namespace UescColcicAPI.Services.Migrations
 {
     [DbContext(typeof(UescColcicDBContext))]
-    [Migration("20241010013142_migration6")]
-    partial class migration6
+    [Migration("20241012235956_migration_gu1")]
+    partial class migration_gu1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -56,7 +56,23 @@ namespace UescColcicAPI.Services.Migrations
 
                     b.HasKey("IdSkill");
 
+                    b.HasIndex("IdProject");
+
                     b.ToTable("Skill", (string)null);
+                });
+
+            modelBuilder.Entity("UescColcicAPI.Core.Skill", b =>
+                {
+                    b.HasOne("UescColcicAPI.Core.Project", null)
+                        .WithMany("Skills")
+                        .HasForeignKey("IdProject")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("UescColcicAPI.Core.Project", b =>
+                {
+                    b.Navigation("Skills");
                 });
 #pragma warning restore 612, 618
         }

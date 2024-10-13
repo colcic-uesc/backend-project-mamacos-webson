@@ -53,9 +53,4 @@ public class SkillCRUD : ISkillCRUD
         }
     }
 
-    private Skill? Find(int id)
-    {
-        return _context.Skill.FirstOrDefault(x => x.IdSkill == id);
-    }
-
 }
