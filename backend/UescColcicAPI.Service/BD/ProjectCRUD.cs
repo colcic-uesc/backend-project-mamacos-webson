@@ -1,4 +1,5 @@
-﻿﻿using UescColcicAPI.Services.BD.Interfaces;
+﻿﻿
+using UescColcicAPI.Services.BD.Interfaces;
 using UescColcicAPI.Core;
 using Microsoft.EntityFrameworkCore;
 using SQLitePCL;
@@ -8,9 +9,9 @@ namespace UescColcicAPI.Services.BD;
 public class ProjectCRUD : IProjectCRUD
 {
     private UescColcicDBContext _context;
-   public ProjectCRUD(UescColcicDBContext context){
+    public ProjectCRUD(UescColcicDBContext context){
         _context = context;
-   }
+    }
     public void Create(Project entity)
     {   
         _context.Project.Add(entity);
@@ -21,9 +22,8 @@ public class ProjectCRUD : IProjectCRUD
     public void Delete(Project entity)
     {   
         var Project = this.ReadById(entity.IdProject);
-        if(Project is  not null){
+        if(Project != null){
             _context.Project.Remove(Project);
-
             _context.SaveChanges();
         }
     }
@@ -47,8 +47,8 @@ public class ProjectCRUD : IProjectCRUD
             Project.IdProject = entity.IdProject;
             Project.ProjectTitle = entity.ProjectTitle;
             Project.ProjectDescription = entity.ProjectDescription;
-            //Project.ProjectStartDate = entity.ProjectStartDate;
-            //Project.ProjectEndDate = entity.ProjectEndDate;
+            Project.ProjectStartDate = entity.ProjectStartDate;
+            Project.ProjectEndDate = entity.ProjectEndDate;
 
             _context.SaveChanges();
         }
@@ -60,3 +60,6 @@ public class ProjectCRUD : IProjectCRUD
     }
 
 }
+
+
+

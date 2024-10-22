@@ -9,6 +9,8 @@ public class UescColcicDBContext : DbContext
    public DbSet<Project> Project { get; set; }
    public DbSet<Skill> Skill { get; set; }
 
+   public DbSet<RequestLog> RequestLogs { get; set; } 
+
    protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
     modelBuilder.Entity<Project>()
@@ -28,10 +30,12 @@ public class UescColcicDBContext : DbContext
         .HasOne<Project>() // Define que Skill está relacionada a Project
         .WithMany(p => p.Skills)
         .HasForeignKey(s => s.IdProject); // Chave estrangeira correta em Skill
+
+        modelBuilder.Entity<RequestLog>().ToTable("RequestLogs").HasKey(p => p.Id);
 }
 
    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
    {
-       optionsBuilder.UseSqlite("Data Source = C:/Users/gugud/Web_2024_2/backend/UescColcicAPI.Service/UescColcicAPI.db");
+       optionsBuilder.UseSqlite("Data Source =  C:/Users/pedro/Documents/backend-project-mamacos-webson/backend/UescColcicAPI.Service/UescColcicAPI.db");
    }
-}
+}                      

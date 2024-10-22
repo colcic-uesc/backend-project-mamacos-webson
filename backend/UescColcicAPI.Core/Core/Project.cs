@@ -8,8 +8,8 @@ public class Project
     public string? ProjectTitle { get; set; }
     public string? ProjectDescription { get; set; }
     public string? ProjectType { get; set; }
-    //public int? ProjectStartDate {get; set;}
-    //public int? ProjectEndDate { get; set; }
+    public DateTime? ProjectStartDate {get; set;}
+    public DateTime? ProjectEndDate { get; set; }
     public virtual ICollection<Skill>? Skills { get; set; } = [];
 
 }

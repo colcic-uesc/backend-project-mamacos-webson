@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UescColcicAPI.Services.BD;
 
@@ -10,9 +11,11 @@ using UescColcicAPI.Services.BD;
 namespace UescColcicAPI.Services.Migrations
 {
     [DbContext(typeof(UescColcicDBContext))]
-    partial class UescColcicDBContextModelSnapshot : ModelSnapshot
+    [Migration("20241022023517_startMiddleware")]
+    partial class startMiddleware
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.10");
@@ -69,7 +72,7 @@ namespace UescColcicAPI.Services.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RequestLogs", (string)null);
+                    b.ToTable("RequestLogs");
                 });
 
             modelBuilder.Entity("UescColcicAPI.Core.Skill", b =>

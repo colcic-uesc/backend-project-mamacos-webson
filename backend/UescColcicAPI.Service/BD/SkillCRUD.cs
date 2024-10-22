@@ -13,6 +13,7 @@ public class SkillCRUD : ISkillCRUD
    }
     public void Create(Skill entity)
     {
+        
         _context.Skill.Add(entity);
         _context.SaveChanges();
     }
@@ -46,11 +47,11 @@ public class SkillCRUD : ISkillCRUD
             Skill.IdSkill = entity.IdSkill;
             Skill.Title = entity.Title;
             Skill.Description = entity.Description;
-            //Skill.SkillStartDate = entity.SkillStartDate;
-            //Skill.SkillEndDate = entity.SkillEndDate;
-
             _context.SaveChanges();
         }
     }
 
 }
+
+
+

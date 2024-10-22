@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UescColcicAPI.Services.BD;
 
@@ -10,9 +11,11 @@ using UescColcicAPI.Services.BD;
 namespace UescColcicAPI.Services.Migrations
 {
     [DbContext(typeof(UescColcicDBContext))]
-    partial class UescColcicDBContextModelSnapshot : ModelSnapshot
+    [Migration("20241022014536_pedro1")]
+    partial class pedro1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.10");
@@ -41,35 +44,6 @@ namespace UescColcicAPI.Services.Migrations
                     b.HasKey("IdProject");
 
                     b.ToTable("Project", (string)null);
-                });
-
-            modelBuilder.Entity("UescColcicAPI.Core.RequestLog", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("ClientIp")
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("HasJwt")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long>("ProcessingTime")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("RequestMethod")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("RequestTime")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("RequestUrl")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RequestLogs", (string)null);
                 });
 
             modelBuilder.Entity("UescColcicAPI.Core.Skill", b =>

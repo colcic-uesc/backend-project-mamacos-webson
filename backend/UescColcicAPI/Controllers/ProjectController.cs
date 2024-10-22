@@ -25,16 +25,35 @@ namespace UescColcicAPI.Controllers;
 
         [HttpPost(Name = "CreateProject")]
         public void Post(Project entity){
+            entity.IdProject = 0;
             _projectCRUD.Create(entity);
         }
 
         [HttpDelete(Name = "DeleteProject")]
-        public void Delete(Project entity){
+        public IActionResult Delete(Project entity)
+        {
+            var project = _projectCRUD.ReadById(entity.IdProject);
+
+            if (project == null)
+            {
+                return NotFound($"Project with Id {entity.IdProject} not found.");
+            }
+
             _projectCRUD.Delete(entity);
+            return Ok($"Project with Id {entity.IdProject} deleted successfully.");
         }
         
         [HttpPut(Name = "UpdateProject")]
-        public void Put(Project entity){
+        public IActionResult Update(Project entity)
+        {
+            var project = _projectCRUD.ReadById(entity.IdProject);
+
+            if (project == null)
+            {
+                return NotFound($"Project with Id {entity.IdProject} not found.");
+            }
             _projectCRUD.Update(entity);
+            return Ok($"Project with Id {entity.IdProject} updated successfully.");
         }
     }
+
