@@ -23,21 +23,22 @@ public class LoggingMiddleware
 
         var clientIp = context.Connection.RemoteIpAddress?.ToString();
         var hasJwtToken = context.Request.Headers.ContainsKey("Authorization");
-        var requestTime = DateTime.Now;
+        var requestDateTime = DateTime.Now;
         var requestMethod = context.Request.Method;
         var requestUrl = context.Request.Path;
 
         await _next(context);
 
         stopwatch.Stop();
-        var processingTime = stopwatch.ElapsedMilliseconds;
+
+        var processingTime = stopwatch.ElapsedMilliseconds / 1000.0;
 
         // Criar um objeto de log
         var requestLog = new RequestLog
         {
             ClientIp = clientIp,
             HasJwt = hasJwtToken,
-            RequestTime = requestTime,
+            RequestDateTime = requestDateTime,
             RequestMethod = requestMethod,
             RequestUrl = requestUrl,
             ProcessingTime = processingTime
@@ -51,7 +52,7 @@ public class LoggingMiddleware
         }
 
         _logger.LogInformation(
-            "Request Information: IP={IP}, HasJwt={HasJwt}, Time={Time}, Method={Method}, URL={URL}, ProcessingTime={ProcessingTime}ms",
-            clientIp, hasJwtToken, requestTime, requestMethod, requestUrl, processingTime);
+            "Request Information: IP={IP}, HasJwt={HasJwt}, Time={Time}, Method={Method}, URL={URL}, ProcessingTime={ProcessingTime}s",
+            clientIp, hasJwtToken, requestDateTime, requestMethod, requestUrl, processingTime);
     }
 }

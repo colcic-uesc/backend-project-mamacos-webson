@@ -1,5 +1,5 @@
 using UescColcicAPI.Core;
 public interface IBaseLog
 {
-    Task LogRequestAsync(RequestLog requestLog);
+    Task LogRequestAsync(RequestLog requestLog);  
 }

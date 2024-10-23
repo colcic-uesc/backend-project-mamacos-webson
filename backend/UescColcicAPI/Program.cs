@@ -1,3 +1,4 @@
+using UescColcicAPI.Middlewares;
 using UescColcicAPI.Services.BD;
 using UescColcicAPI.Services.BD.Interfaces;
 
@@ -19,6 +20,7 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 app.UseMiddleware<LoggingMiddleware>();
+app.UseMiddleware<ResponseAppendMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -55,13 +55,13 @@ namespace UescColcicAPI.Services.Migrations
                     b.Property<bool>("HasJwt")
                         .HasColumnType("INTEGER");
 
-                    b.Property<long>("ProcessingTime")
-                        .HasColumnType("INTEGER");
+                    b.Property<double>("ProcessingTime")
+                        .HasColumnType("REAL");
 
-                    b.Property<string>("RequestMethod")
+                    b.Property<DateTime>("RequestDateTime")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("RequestTime")
+                    b.Property<string>("RequestMethod")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("RequestUrl")
