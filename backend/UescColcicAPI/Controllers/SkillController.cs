@@ -25,16 +25,35 @@ namespace UescColcicAPI.Controllers;
 
         [HttpPost(Name = "CreateSkill")]
         public void Post(Skill entity){
+            entity.IdSkill = 0;
             _skillCRUD.Create(entity);
         }
 
         [HttpDelete(Name = "DeleteSkill")]
-        public void Delete(Skill entity){
+        public IActionResult Delete(Skill entity)
+        {
+            var skill = _skillCRUD.ReadById(entity.IdSkill);
+
+            if (skill == null)
+            {
+                return NotFound($"Skill with Id {entity.IdSkill} not found.");
+            }
+
             _skillCRUD.Delete(entity);
+            return Ok($"Skill with Id {entity.IdSkill} deleted successfully.");
         }
         
         [HttpPut(Name = "UpdateSkill")]
-        public void Put(Skill entity){
+        public IActionResult Update(Skill entity)
+        {
+            var skill = _skillCRUD.ReadById(entity.IdSkill);
+
+            if (skill == null)
+            {
+                return NotFound($"Skill with Id {entity.IdSkill} not found.");
+            }
             _skillCRUD.Update(entity);
+            return Ok($"Skill with Id {entity.IdSkill} updated successfully.");
         }
     }
+

@@ -8,30 +8,42 @@ public class UescColcicDBContext : DbContext
 {
    public DbSet<Project> Project { get; set; }
    public DbSet<Skill> Skill { get; set; }
+   public DbSet<Student> Student { get; set; }
+
+   public DbSet<RequestLog> RequestLogs { get; set; } 
 
    protected override void OnModelCreating(ModelBuilder modelBuilder)
-{
-    modelBuilder.Entity<Project>()
-        .ToTable("Project")
-        .HasKey(p => p.IdProject);
+    {
+        modelBuilder.Entity<Project>().ToTable("Project").HasKey(p => p.IdProject);
+        modelBuilder.Entity<Project>().Property(p => p.IdProject).ValueGeneratedOnAdd();        
 
-    modelBuilder.Entity<Project>()
-        .HasMany(p => p.Skills)
-        .WithOne()
-        .HasForeignKey(p => p.IdProject); // A chave estrangeira correta é IdProject
+        modelBuilder.Entity<Student>().ToTable("Student").HasKey(s => s.IdStudent);
+        modelBuilder.Entity<Student>().HasMany(s => s.Skills).WithOne().HasForeignKey(s => s.IdStudent);
+        modelBuilder.Entity<Student>().HasIndex(s => s.Registration).IsUnique();
+        
 
-    modelBuilder.Entity<Skill>()
-        .ToTable("Skill")
-        .HasKey(p => p.IdSkill);
+        modelBuilder.Entity<Skill>().ToTable("Skill").HasKey(p => p.IdSkill);
+       
+        // Define que uma Skill pode ter um IdProject opcional (nullable)
+        modelBuilder.Entity<Skill>()
+            .HasOne<Project>()
+            .WithMany(p => p.Skills)
+            .HasForeignKey(s => s.IdProject)
+            .IsRequired(false); // Chave estrangeira opcional
 
-    modelBuilder.Entity<Skill>()
-        .HasOne<Project>() // Define que Skill está relacionada a Project
-        .WithMany(p => p.Skills)
-        .HasForeignKey(s => s.IdProject); // Chave estrangeira correta em Skill
-}
+        // Define que uma Skill pode ter um IdStudent opcional (nullable)
+        modelBuilder.Entity<Skill>()
+            .HasOne<Student>()
+            .WithMany(s => s.Skills)
+            .HasForeignKey(s => s.IdStudent)
+            .IsRequired(false); // Chave estrangeira opcional
+
+
+        modelBuilder.Entity<RequestLog>().ToTable("RequestLogs").HasKey(p => p.Id);
+    }
 
    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
    {
-       optionsBuilder.UseSqlite("Data Source = C:/Users/gugud/Web_2024_2/backend/UescColcicAPI.Service/UescColcicAPI.db");
+       optionsBuilder.UseSqlite("Data Source =  C:/Users/gugud/Web_2024_2/backend/UescColcicAPI.Service/UescColcicAPI.db");
    }
-}
+}                      
