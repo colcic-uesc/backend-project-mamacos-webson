@@ -26,10 +26,13 @@ namespace UescColcicAPI.Controllers;
         [HttpPost(Name = "CreateProject")]
         public void Post(Project entity){
             entity.IdProject = 0;
-            foreach (var skill in entity.Skills)
-            {
-                skill.IdStudent = null;
-            } 
+            if(entity.Skills != null){
+                foreach (var skill in entity.Skills)
+                {
+                    skill.IdSkill= 0;
+                    skill.IdStudent = null;
+                } 
+            }
             _projectCRUD.Create(entity);
         }
 

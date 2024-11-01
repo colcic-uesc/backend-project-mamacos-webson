@@ -11,8 +11,8 @@ using UescColcicAPI.Services.BD;
 namespace UescColcicAPI.Services.Migrations
 {
     [DbContext(typeof(UescColcicDBContext))]
-    [Migration("20241030014816_addStudent")]
-    partial class addStudent
+    [Migration("20241101194854_addUser")]
+    partial class addUser
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -117,6 +117,9 @@ namespace UescColcicAPI.Services.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("IdUser")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
@@ -125,10 +128,33 @@ namespace UescColcicAPI.Services.Migrations
 
                     b.HasKey("IdStudent");
 
+                    b.HasIndex("IdUser")
+                        .IsUnique();
+
                     b.HasIndex("Registration")
                         .IsUnique();
 
                     b.ToTable("Student", (string)null);
+                });
+
+            modelBuilder.Entity("UescColcicAPI.Core.User", b =>
+                {
+                    b.Property<int>("IdUser")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Rules")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("IdUser");
+
+                    b.ToTable("User", (string)null);
                 });
 
             modelBuilder.Entity("UescColcicAPI.Core.Skill", b =>
@@ -142,6 +168,17 @@ namespace UescColcicAPI.Services.Migrations
                         .HasForeignKey("IdStudent");
                 });
 
+            modelBuilder.Entity("UescColcicAPI.Core.Student", b =>
+                {
+                    b.HasOne("UescColcicAPI.Core.User", "User")
+                        .WithOne("Student")
+                        .HasForeignKey("UescColcicAPI.Core.Student", "IdUser")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("UescColcicAPI.Core.Project", b =>
                 {
                     b.Navigation("Skills");
@@ -150,6 +187,11 @@ namespace UescColcicAPI.Services.Migrations
             modelBuilder.Entity("UescColcicAPI.Core.Student", b =>
                 {
                     b.Navigation("Skills");
+                });
+
+            modelBuilder.Entity("UescColcicAPI.Core.User", b =>
+                {
+                    b.Navigation("Student");
                 });
 #pragma warning restore 612, 618
         }

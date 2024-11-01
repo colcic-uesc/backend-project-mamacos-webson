@@ -10,7 +10,8 @@ public class Student
     public string? Email { get; set; }
     public string? Course { get; set; }
     public string? Bio { get; set; }
+    public int? IdUser { get; set; }
     public virtual ICollection<Skill>? Skills { get; set; } = [];
-    //public int IdUser { get; set; }
+    public User? User { get; set; }
 
 }

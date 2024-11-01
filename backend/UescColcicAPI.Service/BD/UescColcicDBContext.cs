@@ -9,7 +9,7 @@ public class UescColcicDBContext : DbContext
    public DbSet<Project> Project { get; set; }
    public DbSet<Skill> Skill { get; set; }
    public DbSet<Student> Student { get; set; }
-
+   public DbSet<User> User { get; set; }
    public DbSet<RequestLog> RequestLogs { get; set; } 
 
    protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -40,6 +40,13 @@ public class UescColcicDBContext : DbContext
 
 
         modelBuilder.Entity<RequestLog>().ToTable("RequestLogs").HasKey(p => p.Id);
+
+        modelBuilder.Entity<User>().ToTable("User").HasKey(p => p.IdUser);
+        modelBuilder.Entity<User>()
+        .HasOne(e => e.Student)
+        .WithOne(e => e.User)
+        .HasForeignKey<Student>(e => e.IdUser)
+        .IsRequired();
     }
 
    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

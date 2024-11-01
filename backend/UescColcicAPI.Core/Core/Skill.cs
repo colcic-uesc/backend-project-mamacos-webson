@@ -10,6 +10,6 @@ public class Skill
 
    public string? Title { get; set; }
    public string? Description { get; set; }
-   public int? IdProject {  get; set;   }
-   public int? IdStudent {  get; set;   }
+   public int? IdProject {  get; set; }
+   public int? IdStudent { get; set;}
 }

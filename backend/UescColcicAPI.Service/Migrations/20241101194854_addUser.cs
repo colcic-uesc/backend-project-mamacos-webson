@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace UescColcicAPI.Services.Migrations
 {
     /// <inheritdoc />
-    public partial class addStudent : Migration
+    public partial class addUser : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -47,6 +47,21 @@ namespace UescColcicAPI.Services.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "User",
+                columns: table => new
+                {
+                    IdUser = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    UserName = table.Column<string>(type: "TEXT", nullable: true),
+                    Password = table.Column<string>(type: "TEXT", nullable: true),
+                    Rules = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_User", x => x.IdUser);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Student",
                 columns: table => new
                 {
@@ -56,11 +71,18 @@ namespace UescColcicAPI.Services.Migrations
                     Name = table.Column<string>(type: "TEXT", nullable: true),
                     Email = table.Column<string>(type: "TEXT", nullable: true),
                     Course = table.Column<string>(type: "TEXT", nullable: true),
-                    Bio = table.Column<string>(type: "TEXT", nullable: true)
+                    Bio = table.Column<string>(type: "TEXT", nullable: true),
+                    IdUser = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Student", x => x.IdStudent);
+                    table.ForeignKey(
+                        name: "FK_Student_User_IdUser",
+                        column: x => x.IdUser,
+                        principalTable: "User",
+                        principalColumn: "IdUser",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -100,6 +122,12 @@ namespace UescColcicAPI.Services.Migrations
                 column: "IdStudent");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Student_IdUser",
+                table: "Student",
+                column: "IdUser",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Student_Registration",
                 table: "Student",
                 column: "Registration",
@@ -120,6 +148,9 @@ namespace UescColcicAPI.Services.Migrations
 
             migrationBuilder.DropTable(
                 name: "Student");
+
+            migrationBuilder.DropTable(
+                name: "User");
         }
     }
 }

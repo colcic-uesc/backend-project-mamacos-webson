@@ -5,7 +5,7 @@
 namespace UescColcicAPI.Services.Migrations
 {
     /// <inheritdoc />
-    public partial class addStudent2 : Migration
+    public partial class addUser1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
