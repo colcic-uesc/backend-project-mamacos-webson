@@ -30,7 +30,7 @@ public class StudentCRUD : IStudentCRUD
 
    public IEnumerable<Student> ReadAll()
     {
-        return _context.Student.Include(p => p.Skills).ToList();
+        return _context.Student.Include(p => p.Skills).Include("User").ToList();
     }
 
     public Student? ReadById(int id)
@@ -41,16 +41,17 @@ public class StudentCRUD : IStudentCRUD
 
     public void Update(Student entity)
     {
+        Console.WriteLine(entity.IdStudent);
         var Student = this.ReadById(entity.IdStudent);
+        
         if(Student is not null)
         {
-            Student.IdStudent = entity.IdStudent;
+            Console.WriteLine(Student.ToString());
             Student.Registration = entity.Registration;
             Student.Name = entity.Name;
             Student.Email = entity.Email;
             Student.Course = entity.Course;
             Student.Bio = entity.Bio;
-        
 
             _context.SaveChanges();
         }

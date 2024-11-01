@@ -12,6 +12,6 @@ public class Student
     public string? Bio { get; set; }
     public int? IdUser { get; set; }
     public virtual ICollection<Skill>? Skills { get; set; } = [];
-    public User? User { get; set; }
+    public User User { get; set; } = null!;
 
 }

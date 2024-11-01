@@ -3,6 +3,7 @@ using UescColcicAPI.Services.BD.Interfaces;
 using UescColcicAPI.Core;
 using UescColcicAPI.Services.Auth;
 using UescColcicAPI.Services.BD;
+using BackEndAPI.Core;
 
 namespace UescColcicAPI.Controllers;
 
@@ -20,8 +21,8 @@ public class AuthControler : ControllerBase
         _tokenGeneration = tokenGeneration;
     }
 
-    [HttpGet(Name = "GetToken")]
-    public IActionResult Login([FromBody] User entity)
+    [HttpPost("/login", Name = "GetToken")]
+    public IActionResult Login([FromBody] LoginDTO entity)
     {
         if (entity.UserName is null)
             return Unauthorized();

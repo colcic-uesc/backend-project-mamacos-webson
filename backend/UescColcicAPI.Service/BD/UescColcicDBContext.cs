@@ -45,8 +45,7 @@ public class UescColcicDBContext : DbContext
         modelBuilder.Entity<User>()
         .HasOne(e => e.Student)
         .WithOne(e => e.User)
-        .HasForeignKey<Student>(e => e.IdUser)
-        .IsRequired();
+        .HasForeignKey<Student>(e => e.IdUser);
     }
 
    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
