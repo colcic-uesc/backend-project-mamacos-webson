@@ -50,6 +50,6 @@ public class UescColcicDBContext : DbContext
 
    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
    {
-       optionsBuilder.UseSqlite("Data Source =  C:/Users/gugud/Web_2024_2/backend/UescColcicAPI.Service/UescColcicAPI.db");
+       optionsBuilder.UseSqlite("Data Source =  C:/Users/Kauan Teles/backend-project-mamacos-webson/backend/UescColcicAPI.Service/UescColcicAPI.db");
    }
 }                      

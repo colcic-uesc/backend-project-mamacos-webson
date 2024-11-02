@@ -2,11 +2,13 @@ using Microsoft.AspNetCore.Mvc;
 using UescColcicAPI.Services.BD.Interfaces;
 using UescColcicAPI.Core;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 
 namespace UescColcicAPI.Controllers;
 
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]  // Exige autenticação para todos os endpoints neste controlador
     public class ProjectController : ControllerBase
     {
         private readonly IProjectCRUD _projectCRUD;
