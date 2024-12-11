@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema Acadêmico - Formulário</title>
+    <link rel="stylesheet" href="css/formulario.css">
+</head>
+<body>
+    <header>
+        <h1>Sistema Acadêmico</h1>
+    </header>
+
+    <nav>
+        <a href="lista-itens.html">Lista de Alunos</a>
+        <a href="formulario.html">Formulário</a>
+        <a href="login.html">Sair</a>
+    </nav>
+
+    <div class="container">
+        <h2>Formulário Cadastro Aluno</h2>
+        <form id="academicForm">
+            <div class="form-group">
+                <label for="nome">Nome Completo</label>
+                <input type="text" id="nome" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="telefone">Telefone</label>
+                <input type="tel" id="telefone" required>
+            </div>
+
+            <div class="form-group">
+                <label for="senha">Senha</label>
+                <input type="password" id="senha" required>
+            </div>
+
+            <div class="form-group">
+                <label for="curso">Curso</label>
+                <select id="curso" required>
+                    <option value="">Selecione um curso</option>
+                    <option value="cc">Ciência da Computação</option>
+                    <option value="ads">Análise de Sistemas</option>
+                    <option value="si">Sistemas de Informação</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Turno</label>
+                <div class="radio-group">
+                    <label>
+                        <input type="radio" name="turno" value="manha" required> Manhã
+                    </label>
+                    <label>
+                        <input type="radio" name="turno" value="tarde"> Tarde
+                    </label>
+                    <label>
+                        <input type="radio" name="turno" value="noite"> Noite
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Interesses</label>
+                <div class="checkbox-group">
+                    <label>
+                        <input type="checkbox" name="interesses" value="pesquisa"> Pesquisa
+                    </label>
+                    <label>
+                        <input type="checkbox" name="interesses" value="extensao"> Extensão
+                    </label>
+                    <label>
+                        <input type="checkbox" name="interesses" value="estagio"> Estágio
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="observacoes">Observações</label>
+                <textarea id="observacoes" rows="4" required></textarea>
+            </div>
+
+            <button type="submit" class="btn-submit">Enviar</button>
+        </form>
+    </div>
+
+    <footer>
+        © 2024 Desenvolvido por MamacosWebson
+    </footer>
+
+    <script src="js/formulario.js"></script>
+</body>
+</html>
