@@ -12,6 +12,7 @@ public class UescColcicDBContext : DbContext
    public DbSet<User> User { get; set; }
    public DbSet<RequestLog> RequestLogs { get; set; } 
 
+    public UescColcicDBContext(DbContextOptions<UescColcicDBContext> options):base(options){}
    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Project>().ToTable("Project").HasKey(p => p.IdProject);
@@ -50,6 +51,6 @@ public class UescColcicDBContext : DbContext
 
    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
    {
-       optionsBuilder.UseSqlite("Data Source =  C:/Users/gugud/Web_2024_2/backend/UescColcicAPI.Service/UescColcicAPI.db");
+       base.OnConfiguring(optionsBuilder);
    }
 }                      
